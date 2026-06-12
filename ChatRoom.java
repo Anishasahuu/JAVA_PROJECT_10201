@@ -38,4 +38,32 @@ class Message {
         System.out.println("[" + timestamp + "] " + sender.getUsername() + ": " + content);
     }
 }
+class ChatRoom {
+    private String roomName;
+    private Message[] messages;
+    private int messageCount;
+
+    ChatRoom(String roomName, int size) {
+        this.roomName = roomName;
+        messages = new Message[size];
+        messageCount = 0;
+    }
+
+    void sendMessage(User user, String text) {
+        if (messageCount < messages.length) {
+            String time = java.time.LocalTime.now().withNano(0).toString();
+            messages[messageCount] = new Message(user, text, time);
+            messageCount++;
+        } else {
+            System.out.println("Chat room is full!");
+        }
+    }
+
+    void displayChat() {
+        System.out.println("\n----- Chat History (" + roomName + ") -----");
+        for (int i = 0; i < messageCount; i++) {
+            messages[i].display();
+        }
+    }
+}
 
