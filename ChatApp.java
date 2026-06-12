@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+// 1. User Class
 class User {
     private String username;
     private boolean isOnline;
@@ -18,11 +19,7 @@ class User {
     }
 }
 
-public class ChatRoom {
-    public static void main (String [] args){
-        
-    }
-}
+// 2. Message Class
 class Message {
     private User sender;
     private String content;
@@ -38,6 +35,8 @@ class Message {
         System.out.println("[" + timestamp + "] " + sender.getUsername() + ": " + content);
     }
 }
+
+// 3. ChatRoom Class
 class ChatRoom {
     private String roomName;
     private Message[] messages;
@@ -67,3 +66,50 @@ class ChatRoom {
     }
 }
 
+// 4. Main Application Class
+public class ChatApp {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        ChatRoom room = new ChatRoom("General", 100);
+
+        System.out.print("Enter number of users: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        User[] users = new User[n];
+
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter username " + (i + 1) + ": ");
+            String name = sc.nextLine();
+            users[i] = new User(name);
+        }
+
+        String choice = ""; 
+
+        do {
+            System.out.print("\nSelect user (1 to " + n + "): ");
+            int userIndex = sc.nextInt();
+            sc.nextLine(); // Consume newline
+
+            if (userIndex < 1 || userIndex > n) {
+                System.out.println("Invalid user!");
+                continue;
+            }
+
+            System.out.print("Enter message: ");
+            String msg = sc.nextLine();
+
+            room.sendMessage(users[userIndex - 1], msg);
+
+            System.out.print("Send another message? (yes/no): ");
+            choice = sc.nextLine();
+
+        } while (choice.equalsIgnoreCase("yes"));
+
+        room.displayChat();
+
+        sc.close();
+    }
+}
