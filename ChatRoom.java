@@ -23,3 +23,19 @@ public class ChatRoom {
         
     }
 }
+class Message {
+    private User sender;
+    private String content;
+    private String timestamp;
+
+    Message(User sender, String content, String timestamp) {
+        this.sender = sender;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+
+    void display() {
+        System.out.println("[" + timestamp + "] " + sender.getUsername() + ": " + content);
+    }
+}
+
